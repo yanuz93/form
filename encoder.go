@@ -1,6 +1,7 @@
 package form
 
 import (
+	"bytes"
 	"fmt"
 	"net/url"
 	"reflect"
@@ -56,7 +57,7 @@ func (e *encoder) traverseStruct(v reflect.Value, namespace []byte, idx int) {
 			continue
 		}
 
-		if first {
+		if first || bytes.HasPrefix([]byte(f.name), namespace) {
 			namespace = append(namespace, f.name...)
 		} else {
 			namespace = append(namespace, e.e.namespacePrefix...)
